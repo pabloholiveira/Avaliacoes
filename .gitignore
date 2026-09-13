@@ -1,3 +1,9 @@
+# O painel é ferramenta interna: publicá-lo deixaria qualquer um que
+# descobrisse o endereço abrir o gerador. Ele roda local, via
+# `python3 -m http.server 8080`. Faça backup dele pelo Time Machine —
+# o git não guarda mais este arquivo.
+admin.html
+
 # Backups automáticos do editor
 *.bak.*
 

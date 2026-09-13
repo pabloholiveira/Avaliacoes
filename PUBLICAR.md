@@ -116,12 +116,15 @@ buscar esse arquivo no navegador do visitante. Na prática é o mesmo número qu
 negócio já divulga na fachada e no Google — mas é bom você saber antes de
 prometer confidencialidade a alguém.
 
-**Publicar o `admin.html` é opcional.** Ele funciona 100% no seu computador. Se
-publicar, qualquer um que descobrir o endereço abre o painel — mas não vê seus
-clientes, porque a lista fica no `localStorage` do *seu* navegador, não no
-servidor. O ganho é poder editar de outra máquina; o custo é expor a ferramenta.
-Para começar, recomendo **não** publicar: mantenha o `admin.html` fora do
-repositório ou aceite que a ferramenta fique visível.
+**O `admin.html` não vai para o repositório.** Ele está no `.gitignore`: é
+ferramenta interna e roda 100% no seu computador. Publicado, qualquer um que
+descobrisse o endereço abriria o painel — não veria seus clientes, porque a
+lista fica no `localStorage` do *seu* navegador e não no servidor, mas teria o
+gerador em mãos.
+
+O custo dessa escolha é que **o git não guarda o `admin.html`**. Se precisar
+editá-lo de outra máquina, ou se quiser versioná-lo, remova a linha `admin.html`
+do `.gitignore` — sabendo que ele passa a ficar público junto com o resto.
 
 ---
 
@@ -145,7 +148,8 @@ São duas coisas diferentes, e só uma delas o git protege:
 
 | O quê | Onde vive | Protegido por |
 |---|---|---|
-| Código e JSONs dos clientes | nesta pasta | **git** — `git push` |
+| Landing e JSONs dos clientes | nesta pasta | **git** — `git push` |
+| `admin.html` | só nesta pasta | **nada** — está no `.gitignore` |
 | Carteira do painel | `localStorage` do navegador | **só o export manual** |
 
 A carteira é a lista que aparece na barra lateral do painel. Limpar os dados do
