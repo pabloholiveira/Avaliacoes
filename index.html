@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avalie e ganhe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #2B6E5C;
+    --gold: #E0A93E;
+    --ink: #1F2A24;
+    --paper: #FAF8F3;
+    --line: #E3DDCE;
+    --muted: #6B6355;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Work Sans', -apple-system, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .wrap {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .eyebrow {
+    margin: 0 0 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 10px;
+  }
+
+  .lede {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0 0 28px;
+  }
+
+  .step {
+    display: flex;
+    gap: 14px;
+    padding: 20px 0;
+    border-top: 1px solid var(--line);
+    transition: opacity 0.3s ease;
+  }
+
+  .step-locked {
+    opacity: 0.55;
+  }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .step-locked .step-num {
+    background: var(--muted);
+  }
+
+  .step-body { flex: 1; }
+
+  .step-body h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+
+  .step-body p {
+    font-size: 15px;
+    color: var(--muted);
+    margin: 0 0 14px;
+    line-height: 1.4;
+  }
+
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn-whatsapp {
+    background: var(--gold);
+    color: var(--ink);
+  }
+
+  .btn:disabled {
+    background: var(--line);
+    color: var(--muted);
+    cursor: not-allowed;
+  }
+
+  .btn:disabled:active {
+    transform: none;
+  }
+
+  .hint {
+    margin-top: 10px !important;
+    font-size: 13px !important;
+    color: var(--muted);
+  }
+
+  .footer-note {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 20px;
+  }
+
+  .erro {
+    text-align: center;
+  }
+
+  .erro .mark {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--line);
+    color: var(--muted);
+    font-size: 22px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+  }
+
+  .erro p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0 0 12px;
+  }
+
+  .erro .small {
+    font-size: 13.5px;
+    margin: 0;
+  }
+
+  @media (max-width: 380px) {
+    h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Config padrão: usada quando a página abre sem ?c=<slug>,
+     ou quando o arquivo do cliente não é encontrado. -->
+<script id="config" type="application/json">
+{
+  "businessName": "Barbearia Exemplo",
+  "headline": "Como foi sua experiência hoje?",
+  "lede": "Deixe sua avaliação no Google e resgate uma recompensa na hora.",
+  "googleReviewUrl": "https://g.page/r/SEU_LINK_AQUI/review",
+  "whatsappNumber": "5511999999999",
+  "whatsappMessage": "Olá! Acabei de avaliar vocês no Google 🙌",
+  "step2Title": "Resgate sua recompensa",
+  "rewardText": "10% de desconto no próximo corte",
+  "accentColor": "#2B6E5C"
+}
+</script>
+
+<main class="wrap">
+  <div class="card" id="card">
+    <p class="eyebrow" id="bizName"></p>
+
+    <h1 id="headline"></h1>
+    <p class="lede" id="lede"></p>
+
+    <section class="step" id="step1">
+      <span class="step-num">1</span>
+      <div class="step-body">
+        <h2>Avalie no Google</h2>
+        <p>Leva menos de um minuto.</p>
+        <button class="btn btn-primary" id="btnGoogle">
+          Avaliar agora
+        </button>
+      </div>
+    </section>
+
+    <section class="step step-locked" id="step2">
+      <span class="step-num">2</span>
+      <div class="step-body">
+        <h2 id="step2Title"></h2>
+        <p id="rewardText"></p>
+        <button class="btn btn-whatsapp" id="btnWhatsapp" disabled>
+          Confirmar pelo WhatsApp
+        </button>
+        <p class="hint" id="hintText">Toque em "Avaliar agora" primeiro</p>
+      </div>
+    </section>
+
+    <p class="footer-note">Sua avaliação ajuda pequenos negócios como este a crescer 💚</p>
+  </div>
+
+  <!-- Mostrado no lugar do card quando o ?c=<slug> não existe. Nunca cair na
+       config padrão aqui: ela traz o nome e o WhatsApp de um negócio fictício,
+       e o visitante não teria como perceber que está na página errada. -->
+  <div class="card erro" id="erro" hidden>
+    <p class="mark" aria-hidden="true">!</p>
+    <h1>Página não encontrada</h1>
+    <p>Este QR code aponta para um negócio que ainda não foi publicado ou que saiu do ar.</p>
+    <p class="small">Se você escaneou o código no balcão, avise o estabelecimento.</p>
+  </div>
+</main>
+
+<script>
+(function () {
+  const DEFAULT_CFG = JSON.parse(document.getElementById('config').textContent);
+
+  const el = {
+    bizName: document.getElementById('bizName'),
+    headline: document.getElementById('headline'),
+    lede: document.getElementById('lede'),
+    step2Title: document.getElementById('step2Title'),
+    rewardText: document.getElementById('rewardText'),
+    btnGoogle: document.getElementById('btnGoogle'),
+    btnWhatsapp: document.getElementById('btnWhatsapp'),
+    step2: document.getElementById('step2'),
+    hintText: document.getElementById('hintText'),
+    card: document.getElementById('card'),
+    erro: document.getElementById('erro')
+  };
+
+  const params = new URLSearchParams(location.search);
+
+  // No preview do admin a página é só uma vitrine: nenhum clique pode navegar,
+  // senão o iframe sai da landing e não tem como voltar (o wa.me, por exemplo,
+  // recusa ser embutido e deixa o quadro preso numa tela de erro).
+  const modoPreview = params.get('preview') === '1';
+
+  // Config em vigor. Trocada por apply(); os handlers leem daqui,
+  // então o preview do admin pode reconfigurar a página a quente.
+  let cfg = DEFAULT_CFG;
+
+  // Só http(s) absoluto pode chegar em window.open — bloqueia javascript: e
+  // data:. Exige o esquema explícito: sem isso, "" resolveria para a própria
+  // página (new URL("", base) === base) e o botão reabriria a landing.
+  function linkSeguro(url) {
+    const bruto = String(url || '').trim();
+    if (!/^https?:\/\//i.test(bruto)) return '';
+    try {
+      const u = new URL(bruto);
+      return (u.protocol === 'http:' || u.protocol === 'https:') ? u.href : '';
+    } catch { return ''; }
+  }
+
+  function corSegura(c) {
+    return /^#[0-9a-f]{6}$/i.test(String(c || '').trim()) ? c.trim() : '#2B6E5C';
+  }
+
+  function apply(next) {
+    cfg = Object.assign({}, DEFAULT_CFG, next || {});
+
+    el.erro.hidden = true;
+    el.card.hidden = false;
+
+    document.title = cfg.businessName + " — Avalie e ganhe";
+    el.bizName.textContent = cfg.businessName;
+    el.headline.textContent = cfg.headline;
+    el.lede.textContent = cfg.lede;
+    el.step2Title.textContent = cfg.step2Title;
+
+    // Nem todo cliente oferece brinde: sem rewardText, a linha some.
+    const hasReward = !!(cfg.rewardText || "").trim();
+    el.rewardText.textContent = cfg.rewardText || "";
+    el.rewardText.hidden = !hasReward;
+
+    document.documentElement.style.setProperty('--accent', corSegura(cfg.accentColor));
+  }
+
+  function mostrarErro() {
+    document.title = "Página não encontrada";
+    el.card.hidden = true;
+    el.erro.hidden = false;
+    document.body.style.visibility = '';   // destrava se a página entrou em preview
+  }
+
+  el.btnGoogle.addEventListener('click', function () {
+    const url = linkSeguro(cfg.googleReviewUrl);
+    // Sem link configurado, não abre aba em branco — só destrava o passo 2.
+    if (url && !modoPreview) window.open(url, '_blank', 'noopener');
+    unlockStep2();
+  });
+
+  function unlockStep2() {
+    el.step2.classList.remove('step-locked');
+    el.btnWhatsapp.disabled = false;
+    el.hintText.textContent = "Obrigado! Agora é só confirmar 👇";
+    el.step2.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  el.btnWhatsapp.addEventListener('click', function () {
+    if (el.btnWhatsapp.disabled) return;
+    const numero = String(cfg.whatsappNumber).replace(/\D/g, '');
+    const text = encodeURIComponent(cfg.whatsappMessage);
+    if (modoPreview) {
+      el.hintText.textContent = 'No preview o WhatsApp não abre: wa.me/' + numero;
+      return;
+    }
+    window.location.href = `https://wa.me/${numero}?text=${text}`;
+  });
+
+  // Preview ao vivo do admin (iframe + postMessage). Só liga sob ?preview=1
+  // e só aceita mensagem da própria origem: sem isso, qualquer site poderia
+  // embutir esta página e trocar o WhatsApp do cliente.
+  if (modoPreview) {
+    // Evita o flash da config padrão antes da primeira mensagem do admin.
+    document.body.style.visibility = 'hidden';
+    window.addEventListener('message', function (e) {
+      if (e.origin !== location.origin) return;
+      if (!e.data || e.data.type !== 'avl:config') return;
+      apply(e.data.config);
+      document.body.style.visibility = '';
+    });
+  }
+
+  // Carrega o cliente indicado em ?c=<slug> a partir de clientes/<slug>.json.
+  // Sem ?c= a página é a demonstração; com um ?c= que não resolve ela é um erro
+  // — um QR com slug errado precisa parecer quebrado, não parecer outro negócio.
+  const slug = params.get('c');
+  if (slug === null) {
+    apply(DEFAULT_CFG);
+  } else if (!/^[a-z0-9-]{1,60}$/.test(slug)) {
+    mostrarErro();
+  } else {
+    // Esconde o card durante o fetch: o esqueleto vazio pisca menos que
+    // um nome de negócio que vai ser trocado no instante seguinte.
+    el.card.hidden = true;
+    fetch('clientes/' + slug + '.json')
+      .then(r => r.ok ? r.json() : Promise.reject(new Error(r.status)))
+      .then(dados => {
+        if (!dados || typeof dados !== 'object' || Array.isArray(dados)) {
+          throw new Error('formato');
+        }
+        apply(dados);
+      })
+      .catch(mostrarErro);
+  }
+})();
+</script>
+
+</body>
+</html>
