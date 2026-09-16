@@ -116,15 +116,20 @@ buscar esse arquivo no navegador do visitante. Na prática é o mesmo número qu
 negócio já divulga na fachada e no Google — mas é bom você saber antes de
 prometer confidencialidade a alguém.
 
-**O `admin.html` não vai para o repositório.** Ele está no `.gitignore`: é
-ferramenta interna e roda 100% no seu computador. Publicado, qualquer um que
-descobrisse o endereço abriria o painel — não veria seus clientes, porque a
-lista fica no `localStorage` do *seu* navegador e não no servidor, mas teria o
-gerador em mãos.
+**O `admin.html` está no repositório, mas não no site.** Ele é versionado — é
+assim que mais de uma pessoa trabalha no painel — e o `_config.yml` o mantém
+fora do build do Pages, então `…github.io/avaliacoes/admin.html` responde 404.
+O painel roda local, por `python3 -m http.server`, em cada máquina.
 
-O custo dessa escolha é que **o git não guarda o `admin.html`**. Se precisar
-editá-lo de outra máquina, ou se quiser versioná-lo, remova a linha `admin.html`
-do `.gitignore` — sabendo que ele passa a ficar público junto com o resto.
+Como o repositório é público, o código do painel é legível por quem abrir o
+GitHub. O que a exclusão evita é ele ficar *funcionando* como página no ar, à
+mão de qualquer um que descubra o endereço. Se um dia isso deixar de importar,
+apague a linha `admin.html` do `_config.yml`.
+
+**A carteira de clientes não é compartilhada pelo git.** Ela vive no
+`localStorage` do navegador de cada um. Duas pessoas com o mesmo repositório têm
+duas listas independentes — para passar clientes de uma máquina para outra, use
+**Exportar clientes** de um lado e **Importar backup** do outro.
 
 ---
 
@@ -148,8 +153,7 @@ São duas coisas diferentes, e só uma delas o git protege:
 
 | O quê | Onde vive | Protegido por |
 |---|---|---|
-| Landing e JSONs dos clientes | nesta pasta | **git** — `git push` |
-| `admin.html` | só nesta pasta | **nada** — está no `.gitignore` |
+| Landing, painel e JSONs dos clientes | nesta pasta | **git** — `git push` |
 | Carteira do painel | `localStorage` do navegador | **só o export manual** |
 
 A carteira é a lista que aparece na barra lateral do painel. Limpar os dados do
