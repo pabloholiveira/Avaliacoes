@@ -19,7 +19,7 @@ Na pasta do projeto:
 
 ```bash
 cd ~/Desktop/Landingpage_avl
-gh repo create avaliacoes --public --source=. --remote=origin --push
+gh repo create Avaliacoes --public --source=. --remote=origin --push
 ```
 
 Isso cria o repositório no GitHub, liga esta pasta a ele e envia tudo, em um
@@ -31,12 +31,12 @@ públicos. Se a sua conta for Pro, `--private` também funciona.
 <details>
 <summary>Alternativa pelo navegador, sem o <code>gh</code></summary>
 
-1. Em <https://github.com/new>: nome `avaliacoes`, **Public**, **sem** README.
+1. Em <https://github.com/new>: nome `Avaliacoes`, **Public**, **sem** README.
 2. **Create repository**.
 3. De volta ao terminal:
 
 ```bash
-git remote add origin https://github.com/pabloholiveira/avaliacoes.git
+git remote add origin https://github.com/pabloholiveira/Avaliacoes.git
 git push -u origin main
 ```
 </details>
@@ -53,8 +53,14 @@ branch **main**, pasta **/ (root)** → **Save**.
 Espere 1 a 2 minutos. A URL aparece no topo da mesma página:
 
 ```
-https://pabloholiveira.github.io/avaliacoes/
+https://pabloholiveira.github.io/Avaliacoes/
 ```
+
+> **Nunca renomeie o repositório depois de imprimir a primeira placa.** A URL do
+> Pages carrega o nome do repositório, maiúsculas inclusive, e o endereço antigo
+> passa a dar 404 na hora — sem redirecionamento. Todo QR já impresso morre
+> junto. (O rename de `avaliacoes` para `Avaliacoes` em 16/09/2026 fez
+> exatamente isso; só havia clientes de teste no ar.)
 
 ## 3. Configurar o painel
 
@@ -82,7 +88,7 @@ botão **Baixar QR** é liberado.
    ```
 
 4. Esperar ~1 minuto e **abrir no navegador**
-   `https://pabloholiveira.github.io/avaliacoes/?c=SLUG`.
+   `https://pabloholiveira.github.io/Avaliacoes/?c=SLUG`.
 5. Só então **Baixar QR** e mandar a placa para impressão.
 
 **Nunca imprima uma placa antes de conferir o link no navegador.** A placa é
@@ -107,10 +113,38 @@ git log origin/main..main   # commits feitos mas não enviados
 
 ---
 
+## Trabalhando em duas máquinas
+
+Na máquina do parceiro, uma vez:
+
+```bash
+git clone https://github.com/pabloholiveira/Avaliacoes.git
+cd Avaliacoes
+python3 -m http.server 8080
+```
+
+Depois, <http://localhost:8080/admin.html> — e a **URL base da hospedagem**
+precisa ser configurada ali também, na engrenagem: ela vive no navegador de cada
+um, não no repositório.
+
+Para poder dar `git push`, ele precisa ser colaborador do repositório:
+
+```bash
+gh api -X PUT repos/pabloholiveira/Avaliacoes/collaborators/USUARIO-DELE
+```
+
+Sem isso ele clona e edita, mas não envia — teria que mandar o arquivo por fora.
+
+**Antes de começar a editar, sempre `git pull`.** Dois `admin.html` editados em
+paralelo dão conflito num arquivo de 1889 linhas, e resolver isso à mão não é
+divertido. Combinem de mexer no painel um de cada vez.
+
+---
+
 ## Duas coisas que você precisa saber
 
 **Os arquivos em `clientes/` são públicos.** Qualquer pessoa pode abrir
-`https://pabloholiveira.github.io/avaliacoes/clientes/barbearia-do-ze.json` e ler
+`https://pabloholiveira.github.io/Avaliacoes/clientes/barbearia-do-ze.json` e ler
 o WhatsApp do cliente. Isso é inerente ao modelo sem backend: a landing precisa
 buscar esse arquivo no navegador do visitante. Na prática é o mesmo número que o
 negócio já divulga na fachada e no Google — mas é bom você saber antes de
@@ -118,7 +152,7 @@ prometer confidencialidade a alguém.
 
 **O `admin.html` está no repositório, mas não no site.** Ele é versionado — é
 assim que mais de uma pessoa trabalha no painel — e o `_config.yml` o mantém
-fora do build do Pages, então `…github.io/avaliacoes/admin.html` responde 404.
+fora do build do Pages, então `…github.io/Avaliacoes/admin.html` responde 404.
 O painel roda local, por `python3 -m http.server`, em cada máquina.
 
 Como o repositório é público, o código do painel é legível por quem abrir o
