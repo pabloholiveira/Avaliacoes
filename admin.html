@@ -585,6 +585,11 @@ h1, h2, h3 { margin: 0; font-weight: 600; }
 /* display:flex acima venceria o [hidden] padrão do navegador */
 .backdrop[hidden] { display: none; }
 
+/* Mesma armadilha fora dos modais: .empty-state, .qr-area e outros têm
+   display próprio e apareciam mesmo com [hidden] — o "Nenhum cliente ainda"
+   ficava à mostra junto do formulário. */
+[hidden] { display: none !important; }
+
 .modal {
   width: 100%;
   max-width: 420px;
